@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: etsychatbot-app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=your_openai_api_key_here
+      - OPENAI_CHAT_MODEL=gpt-4o
+      - EMBEDDING_MODEL=text-embedding-3-small
+      - JWT_SECRET=your_super_secret_jwt_key_here
+      - JWT_ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+      - RETRIEVAL_TOP_K=5
+      - RETRIEVAL_SCORE_MIN=0.7
+      - QDRANT_URL=https://7162f887-8e1e-431b-ac7d-f78e1e0dc1db.us-east4-0.gcp.cloud.qdrant.io
+      - QDRANT_API_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.u7vsGZVQmnvWuBy9oOpx5fBmzfMaBa_it0qAo2SUBuc
+      - QDRANT_COLLECTION_NAME=rag_chatbot
+      - ENV=production
+    volumes:
+      - ./uploads:/app/uploads
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

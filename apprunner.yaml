@@ -1,0 +1,36 @@
+version: 1.0
+runtime: python3
+build:
+  commands:
+    build:
+      - pip install -r requirements.txt
+run:
+  runtime-version: 3.11
+  command: python run.py
+  network:
+    port: 8000
+  env:
+    - name: OPENAI_API_KEY
+      value: "your_openai_api_key_here"
+    - name: OPENAI_CHAT_MODEL
+      value: "gpt-4o"
+    - name: EMBEDDING_MODEL
+      value: "text-embedding-3-small"
+    - name: JWT_SECRET
+      value: "your_super_secret_jwt_key_here"
+    - name: JWT_ALGORITHM
+      value: "HS256"
+    - name: ACCESS_TOKEN_EXPIRE_MINUTES
+      value: "30"
+    - name: RETRIEVAL_TOP_K
+      value: "5"
+    - name: RETRIEVAL_SCORE_MIN
+      value: "0.7"
+    - name: QDRANT_URL
+      value: "https://7162f887-8e1e-431b-ac7d-f78e1e0dc1db.us-east4-0.gcp.cloud.qdrant.io"
+    - name: QDRANT_API_KEY
+      value: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.u7vsGZVQmnvWuBy9oOpx5fBmzfMaBa_it0qAo2SUBuc"
+    - name: QDRANT_COLLECTION_NAME
+      value: "rag_chatbot"
+    - name: ENV
+      value: "production"
